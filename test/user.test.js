@@ -27,4 +27,19 @@ describe('POST /api/users', () => {
         expect(result.body.data.password).toBeUndefined();
 
     });
+
+    it('should cant register with wrong email', async() => {
+        const result = await supertest(web)
+        .post('/api/users')
+        .send({
+            email: 'email',
+            password: 'testing',
+            name: 'Test'
+        })
+
+        logger.info(result.body)
+
+        expect(result.status).toBe(400)
+        expect(result.body.errors).toBeDefined()
+    })
 });
